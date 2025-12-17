@@ -24,6 +24,6 @@ jobs:
           server: ftpupload.net
           username: ${{ secrets.FTP_if0_40702536 }}
           password: ${{ secrets.FTP_R1xFX1lwBzg3FP }}
-          server-dir: /htdocs/  # For addon domains
+          server-dir: /ejossolution.great-site.net/htdocs/  # For addon domains
           timeout: 86400000
           log-level: standard
