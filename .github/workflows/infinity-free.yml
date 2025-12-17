@@ -1,5 +1,6 @@
-name: Deploy to ejossolution.great-site.net
+name: Deploy to InfinityFree
 
+# Run manually or on push to the main branch
 on:
   workflow_dispatch:
   push:
@@ -12,17 +13,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout repository
+      # Step 1: Clone the latest code from GitHub
       - name: Get latest code
         uses: actions/checkout@v4
 
-      # Step 2: Deploy via FTP
-      - name: Deploy to ejossolution.great-site.net
+      # Step 2: Upload code via FTP
+      - name: Deploy to InfinityFree via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ftpupload.net
           username: ${{ secrets.if0_40702536 }}
           password: ${{ secrets.R1xFX1lwBzg3FP }}
-          server-dir: /htdocs/
+          server-dir: /htdocs/  # For addon domains
+          timeout: 86400000
           log-level: standard
-
