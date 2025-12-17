@@ -21,8 +21,8 @@ jobs:
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ftpupload.net
-          username: ${{ secrets.rafael_3.5 }}
-          password: ${{ secrets.rafael_4.6 }}
+          username: ${{ secrets.rafael_35 }}
+          password: ${{ secrets.rafael_46 }}
           server-dir: /ejossolution.great-site.net/htdocs/
           log-level: standard
 
