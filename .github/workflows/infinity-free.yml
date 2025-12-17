@@ -23,6 +23,6 @@ jobs:
           server: ftpupload.net
           username: ${{ secrets.if0_40702536 }}
           password: ${{ secrets.R1xFX1lwBzg3FP }}
-          server-dir: /ejossolution.great-site.net/htdocs/
+          server-dir: /htdocs/
           log-level: standard
 
