@@ -39,8 +39,11 @@ class BusinessController extends Controller
         // Handle logo upload
         $logoPath = null;
         if ($request->hasFile('logo')) {
-            $logoPath = $request->file('logo')->store('logos', 'public');
-        }
+    $logoPath = $request->file('logo')->store('logos', 'public');
+    $supplier->logo = $logoPath;
+    $supplier->save();
+}
+
 
         Supplier::create([
             'user_id'       => Auth::id(),

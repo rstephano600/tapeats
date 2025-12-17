@@ -144,31 +144,63 @@
 
     <main class="container-fluid container-md py-4">
 <div class="mb-5">
-    <h2 class="h5 fw-bold text-dark mb-4">Popular Suppliers</h2>
+    <div class="d-flex align-items-center justify-content-between mb-4">
+        <h2 class="h4 fw-bold text-dark m-0">
+            <span class="border-start border-4 border-warning ps-3">Popular Suppliers</span>
+        </h2>
+        <a href="#" class="btn btn-sm btn-outline-secondary rounded-pill">View All</a>
+    </div>
+
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4" id="suppliersGrid">
         @foreach($suppliers as $supplier)
         <div class="col">
-            {{-- Use an anchor tag around the card for navigation --}}
-            <a href="{{ route('menu.supplier', ['id' => $supplier->id]) }}" class="text-decoration-none text-dark">
-                <div class="fade-in card shadow-sm h-100 border-0 rounded-3 overflow-hidden cursor-pointer">
-                    @if($supplier->logo)
-                    <img src="{{ asset('storage/' . $supplier->logo) }}" alt="{{ $supplier->business_name }}" class="card-img-top" style="height: 180px; object-fit: cover;">
-                    @else
-                    <div class="w-100 bg-gradient-custom d-flex align-items-center justify-content-center" style="height: 180px;">
-                        <span class="text-white h1 fw-bold">{{ substr($supplier->business_name, 0, 2) }}</span>
-                    </div>
-                    @endif
-                    <div class="card-body p-3">
-                        <h3 class="card-title h6 fw-bold mb-2">{{ $supplier->business_name }}</h3>
-                        <div class="d-flex justify-content-between align-items-center small text-secondary">
-                            <span>📍 {{ $supplier->region ?? 'Location' }}</span>
-                            <span class="badge {{ $supplier->is_verified ? 'text-bg-success' : 'text-bg-light text-secondary border' }} rounded-pill">
-                                {{ $supplier->is_verified ? '✓ Verified' : 'Pending' }}
+            <a href="{{ route('menu.supplier', ['id' => $supplier->id]) }}" class="text-decoration-none group">
+                <div class="card h-100 border-0 rounded-4 shadow-sm hover-lift transition-all">
+                    {{-- Image Container with Badge Overlay --}}
+                    <div class="position-relative overflow-hidden rounded-top-4">
+                        @if($supplier->logo)
+                            <img src="{{ asset('storage/' . $supplier->logo) }}" 
+                                 alt="{{ $supplier->business_name }}" 
+                                 class="card-img-top supplier-img" 
+                                 style="height: 200px; object-fit: cover;">
+                        @else
+                            <div class="w-100 bg-gradient-warning d-flex align-items-center justify-content-center" style="height: 200px;">
+                                <span class="text-white display-4 fw-bold opacity-50">{{ substr($supplier->business_name, 0, 1) }}</span>
+                            </div>
+                        @endif
+                        
+                        {{-- Verified Badge Overlay --}}
+                        <div class="position-absolute top-0 end-0 m-3">
+                            <span class="badge {{ $supplier->is_verified ? 'bg-success' : 'bg-dark opacity-75' }} shadow-sm py-2 px-3 rounded-pill">
+                                {!! $supplier->is_verified ? '<i class="bi bi-patch-check-fill me-1"></i> Verified' : 'Pending' !!}
                             </span>
                         </div>
+                    </div>
+
+                    <div class="card-body p-4">
+                        <h3 class="h5 fw-extrabold text-dark mb-1 text-truncate">{{ $supplier->business_name }}</h3>
+                        
+                        <div class="d-flex align-items-center mb-3 text-muted small">
+                            <i class="bi bi-geo-alt-fill text-danger me-1"></i>
+                            <span class="fw-medium">{{ $supplier->region ?? 'Main Branch' }}</span>
+                            <span class="mx-2">•</span>
+                            <i class="bi bi-star-fill text-warning me-1"></i>
+                            <span class="fw-bold text-dark">4.8</span> {{-- Placeholder for rating --}}
+                        </div>
+
                         @if($supplier->description)
-                        <p class="card-text small text-muted mt-2 text-truncate">{{ $supplier->description }}</p>
+                            <p class="card-text small text-secondary line-clamp-2 mb-0">
+                                {{ $supplier->description }}
+                            </p>
                         @endif
+                    </div>
+                    
+                    <div class="card-footer bg-transparent border-0 px-4 pb-4">
+                        <div class="d-grid">
+                            <span class="btn btn-light btn-sm rounded-pill fw-bold text-orange hover-orange">
+                                View Menu <i class="bi bi-arrow-right ms-1"></i>
+                            </span>
+                        </div>
                     </div>
                 </div>
             </a>
@@ -375,33 +407,7 @@
             
             updateCart();
         }
-// Function to handle the redirect on click
-function redirectToSupplierMenu(supplierId) {
-    // 1. Get the base URL from a hidden element or a global variable setup by Blade.
-    // Recommended way: Inject the URL structure into a data attribute on a script tag.
-    
-    // --- Setup in Blade (in your layout/app.blade.php) ---
-    /*
-    <script>
-        window.routes = {
-            menuSupplier: "{{ url('supplier') }}/:id/foods" 
-        };
-    </script>
-    */
-    // ----------------------------------------------------
-    
-    // 2. Build the final URL
-    if (window.routes && window.routes.menuSupplier) {
-        const url = window.routes.menuSupplier.replace(':id', supplierId);
-        
-        // 3. Perform the redirect
-        window.location.href = url;
-    } else {
-        console.error("Supplier route template not found in window.routes.");
-        // Fallback: This URL must match your routes/web.php definition
-        window.location.href = `/supplier/${supplierId}/foods`;
-    }
-}
+
         // Update cart display
         function updateCart() {
             const cartCount = document.getElementById('cartCount');

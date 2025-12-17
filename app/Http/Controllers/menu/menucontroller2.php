@@ -184,13 +184,18 @@ class MenuController2 extends Controller
     /**
      * Get foods by supplier
      */
-    public function foodsBySupplier($supplierId)
-    {
-        $foods = Food::where('available', true)
-            ->where('supplier_id', $supplierId)
-            ->with('supplier')
-            ->get();
+public function foodsBySupplier($supplierId)
+{
+    // 1. Get the foods for this supplier
+    $foods = Food::where('available', true)
+        ->where('supplier_id', $supplierId)
+        ->get();
 
-        return response()->json($foods);
-    }
+    // 2. Get the supplier details (for the header/logo)
+    $supplier = Supplier::findOrFail($supplierId);
+
+    // 3. Return the Blade view instead of JSON
+    return view('menu.supplier_menu', compact('foods', 'supplier'));
+}
+
 }

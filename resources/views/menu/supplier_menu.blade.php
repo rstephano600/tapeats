@@ -130,18 +130,7 @@
         </div>
     </header>
 
-    <div class="bg-white border-bottom">
-        <div class="container-fluid container-md py-3">
-            <div class="d-flex overflow-x-auto gap-2 pb-2">
-                <button class="category-btn btn btn-custom-orange rounded-pill text-nowrap" data-category="all">All</button>
-                @foreach($categories as $category)
-                <button class="category-btn btn btn-light text-nowrap rounded-pill text-dark-emphasis" data-category="{{ $category }}">
-                    {{ ucfirst($category) }}
-                </button>
-                @endforeach
-            </div>
-        </div>
-    </div>
+
 
     <div class="container py-4">
 
